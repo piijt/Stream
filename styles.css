@@ -2,7 +2,26 @@
   color: white!important;
 }
 
-video, img {
-  width: 100%;
+video {
+  width: 80%;
   height: auto;
 }
+
+.img-thumbnail {
+  width: 25%;
+}
+
+
+img:hover {
+  background-color: #ffc107;
+}
+
+.big {
+  width: 100%;
+}
+
+/* @media (min-width: 400px) {
+  .img-thumbnail {
+    width: 100%;
+  }
+} */
