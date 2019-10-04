@@ -1,0 +1,39 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Webcam Demo</title>
+  <link rel="stylesheet" href="filters.css">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
+</head>
+  <body>
+
+
+    <div class="sticky-top" style="background-color: white;">
+      <div class="btn-group btn-toolbar">
+        <button class="btn btn-outline-primary" id="screenshot"><i class="fas fa-camera"></i></button>
+        <button class="btn btn-outline-success" id="captVideo"><i class="fas fa-video"></i></button>
+        <button class="btn btn-outline-warning" id="PrevcssFilter">Previous Filter</button>
+        <button class="btn btn-outline-info" id="NextcssFilter">Next Filter</i></button>
+      </div>
+    </div>
+
+    <div id="img-timeline" class="img-container">
+      <picture>
+        <img style="display: none;" alt="">
+      </picture>
+    </div>
+
+    <div class="video">
+      <center>
+        <video autoplay></video>
+        <canvas style="display: none;"></canvas>
+      </center>
+    </div>
+
+    <script src="app.js" charset="utf-8"></script>
+  </body>
+</html>
