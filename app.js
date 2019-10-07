@@ -1,4 +1,4 @@
-      'use strict';
+
       // Helper functions.. save keystrokes
       let log = console.log;
       let $ = function(foo) {
@@ -21,17 +21,17 @@
 
       const canvas = document.createElement("canvas");
 
-      const constraints = {
-        video: true
-      }
-
+      // constraints object
       const hdConstraints = {
-        video: {width: {min: 1280}, height: {min: 720}}
+        audio: false,
+        video: {
+          facingMode: "user",
+          width: {min: 1280},
+          height: {min: 720}
+         }
       };
-
-      const vgaConstraints = {
-        video: {width: {exact: 640}, height: {exact: 480}}
-      };
+      // width & height is preference
+      // facingMode can be an object to facingMode:{exact: "user || enviroment"}
 
       let filtersIndex = 0;
       const filters = [
@@ -56,37 +56,6 @@
               .then(gotStream).catch(errorHandler);
       }
 
-      NextcssFilter.onclick = function() {
-        video.className = filters[filtersIndex++ % filters.length];
-      };
-
-
-      PrevcssFilter.onclick = function() {
-        video.className = filters[filtersIndex-- % filters.length];
-      };
-
-      function dynamicImg() {
-        this.innerHTML = 'Dynamic event success.';
-        this.className += ' dynamic-success';
-      }
-
-      //capture screenshot and attach styles from video
-      screenShot.onclick = video.onclick = function () {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        img.src = canvas.toDataURL('image/webp');
-        // generate thumbnails for each screenshot
-        let createElement = document.createElement('img'); // create img element
-        let appendData = createElement.src = canvas.toDataURL('image/webp'); // append src
-        let fullPath = appendData.split(createElement);
-        let srcNode = document.createElement("img").src = fullPath;
-        let imgNode = document.createElement("img");
-        imgNode.src = srcNode;
-        let attachData = query("picture").appendChild(imgNode);
-        imgNode.className = "img-fluid img-thumbnail " + video.className;
-      }
-
       function gotStream(stream) {
         window.stream = stream;
         video.srcObject = stream;
@@ -96,4 +65,85 @@
         console.error('Error', err);
       }
 
-      
+      NextcssFilter.onclick = function() {
+        video.className = filters[filtersIndex++ % filters.length];
+          $('outputFilterName').innerHTML = 'Current Filter: '
+          + video.className.charAt(0).toUpperCase()
+          + video.className.substring(1);
+      };
+
+
+      PrevcssFilter.onclick = function() {
+        video.className = filters[filtersIndex-- % filters.length];
+          $('outputFilterName').innerHTML = 'Current Filter: '
+          + video.className.charAt(0).toUpperCase()
+          + video.className.substring(1);
+          if(video.className === 'undefined') {
+            $('outputFilterName').innerHTML = 'Current Filter: None';
+          }
+      };
+
+      //capture screenshot and attach styles from video
+      screenShot.onclick = video.onclick = function () {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext('2d').drawImage(video, 0, 0);
+        img.src = canvas.toDataURL('image/webp');
+        // generate thumbnails & controls for each screenshot
+        let wrapperDiv = document.createElement('div');
+        let createElement = document.createElement('img'); // create img element
+        let appendData = createElement.src = canvas.toDataURL('image/webp'); // append src
+        let fullPath = appendData.split(createElement); // get data from canvas
+        let srcNode = document.createElement("img").src = fullPath; // append src to img node
+        let imgNode = document.createElement("img");
+        imgNode.src = srcNode;
+        let attachData = query("picture").appendChild(wrapperDiv).appendChild(imgNode); // append div til picture tag --> append imgNode to div
+        imgNode.className = "img-fluid img-thumbnail " + video.className;
+        wrapperDiv.className = "img-wrapper";
+        let delBtn = document.createElement('i');
+        delBtn.className = "fas fa-trash text-danger";
+        let editBtn = document.createElement('i');
+        editBtn.className = "fas fa-edit text-info";
+
+        wrapperDiv.appendChild(delBtn);
+        wrapperDiv.appendChild(editBtn);
+
+        let saveImg = document.createElement('a');
+        saveImg.setAttribute("download", `${srcNode}+ .png`);
+        saveImg.setAttribute("href", srcNode);
+        saveImg.className = "fas fa-save";
+        wrapperDiv.appendChild(saveImg);
+
+        // delete node
+        delBtn.addEventListener('click', () => {
+          imgNode.remove();
+          delBtn.remove();
+          editBtn.remove();
+          saveImg.remove();
+          wrapperDiv.remove();
+        });
+      }
+
+      //Record Video
+      // let startRec = $('startRec');
+      // let stopRec = $('stopRec');
+      // let mediaRecorder = new MediaRecorder(gotStream);
+      // let chunks = [];
+      //
+      // startRec.addEventListener('click', (e) => {
+      //   mediaRecorder.start();
+      //   log(mediaRecorder.state);
+      // });
+      // stopRec.addEventListener('click', (e) => {
+      //   mediaRecorder.stop();
+      //   log(mediaRecorder.state);
+      // });
+      // mediaRecorder.ondataavailable = function(e) {
+      //   chunks.push(e.data);
+      // }
+      // mediaRecorder.onstop = (e) => {
+      //   let blob = new Blob(chunks, { 'type' : 'video/mp4;'});
+      //   chunks = [];
+      //   let videoURL = window.URL.createObjectURL(blob);
+      //   vidSave.src = videoURL;
+      // }

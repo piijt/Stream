@@ -3,12 +3,42 @@
 }
 
 video {
-  width: 80%;
+  width: 100%;
   height: auto;
+  margin-bottom: 50px;
 }
 
-.img-thumbnail {
-  width: 25%;
+
+#img-timeline {
+  display: inline-block;
+}
+
+.img-wrapper {
+  /* margin: 10 10 10 10; */
+  border-radius: 5px;
+  border: 2px solid #f1f1f1;
+  width: 20%;
+  display: inline-block;
+}
+
+.fa-trash {
+  color: red;
+  padding: 5 5 0 0;
+}
+
+.fa-trash:hover,
+.fa-edit:hover,
+.fa-save:hover {
+  opacity: .5;
+}
+
+.fa-save {
+  color: #be4bdb;
+}
+
+.fa-edit {
+  color: green;
+  padding: 5 5 0 0;
 }
 
 
@@ -20,8 +50,12 @@ img:hover {
   width: 100%;
 }
 
-/* @media (min-width: 400px) {
-  .img-thumbnail {
-    width: 100%;
+@media (min-width: 1000px) {
+  video {
+    width: 60%;
   }
-} */
+  #img-timeline {
+    display: block;
+  }
+
+}
